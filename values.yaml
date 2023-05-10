@@ -38,10 +38,10 @@ securityContext: {}
 
 rpcCache:
   enabled: true
-  rpcPrefix: "junorpc_1"
-  rpcUrl: "https://rpc.juno.strange.love:443"
-  rpcWebsocket: "ws://"
-  nodeMoniker: "reecepbcups"
+  rpcPrefix: "stride-1"
+  rpcUrl: "https://chihuahua-fullnode:26657"
+  rpcWebsocket: "ws://chihuahua-fullnode:9090"
+  nodeMoniker: "stride-hackathon"
   rpcListenAddress: "HIDDEN"
   nodeTmVersion: "HIDDEN"
   coingeckoEnabled: true
@@ -56,13 +56,13 @@ rpcCache:
 
 restApiCache:
   enabled: false
-  restApiPrefix: "junorpc_1"
-  restApiUrl: "https://rpc.juno.strange.love:443"
-  nodeMoniker: "reecepbcups"
+  restApiPrefix: "stride-1"
+  restApiUrl: "https://chihuahua-fullnode:1317"
+  nodeMoniker: "stride-hackathon"
   enableCounter: false
   remoteConfigTimeFile: "https://raw.githubusercontent.com/Reecepbcups/cosmos-endpoint-cache/main/configs/cache_times.json"
   useBackupAsPrimary: false
-  apiTitle: "JUNO REST API"
+  apiTitle: "Stride REST API"
   disableSwagger: true
   backupRestApiUrl: "https://juno-api.polkachu.com"
   port: 5000
