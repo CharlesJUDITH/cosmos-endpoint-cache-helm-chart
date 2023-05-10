@@ -44,7 +44,7 @@ rpcCache:
   nodeMoniker: "stride-hackathon"
   rpcListenAddress: "HIDDEN"
   nodeTmVersion: "HIDDEN"
-  coingeckoEnabled: true
+  coingeckoEnabled: false
   coingeckoCacheSeconds: 6
   coingeckoIds: "cosmos"
   coinGeckoFiat: "usd,eur,gbp"
