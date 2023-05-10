@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cosmos-endpoint-cache.fullname" . }}
+  labels:
+    {{- include "cosmos-endpoint-cache.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "cosmos-endpoint-cache.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cosmos-endpoint-cache.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "cosmos-endpoint-cache.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: rpc-cache
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: REMOTE_CONFIG_TIME_FILE
+              value: {{ .Values.rpcCache.remoteConfigTimeFile}}
+            - name: "RPC_PREFIX"
+              value: {{ .Values.rpcCache.rpcPrefix }}
+            - name: ENABLE_COUNTER
+              value: "false"
+            - name: USE_BACKUP_AS_PRIMARY
+              value: "false"
+            - name: RPC_URL
+              value: "https://rpc.juno.strange.love:443"
+            - name: BACKUP_RPC_URL
+              value: "https://juno-rpc.polkachu.com"
+            - name: RPC_WEBSOCKET
+              value: "ws://15.204.143.232:26657/websocket"
+            - name: NODE_MONIKER
+              value: "reecepbcups"
+            - name: RPC_LISTEN_ADDRESS
+              value: "HIDDEN"
+            - name: NODE_TM_VERSION
+              value: "HIDDEN"
+            - name: COINGECKO_ENABLED
+              value: "true"
+            - name: COINGECKO_CACHE_SECONDS
+              value: "6"
+            - name: COINGECKO_IDS
+              value: "cosmos"
+            - name: COINGECKO_FIAT
+              value: "usd"
+            - name: RPC_TITLE
+              value: "Juno Docker RPC"
+
+        - name: rest-cache
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: REMOTE_CONFIG_TIME_FILE
+              value: {{ .Values.restApiCache.remoteConfigTimeFile}}
+            - name: REST_PREFIX
+              value: {{ .Values.restApiCache.restApiPrefix }}
+            - name: USE_BACKUP_AS_PRIMARY
+              value: {{ .Values.restApiCache.useBackupAsPrimary }}
+            - name: REST_URL
+              value: {{ .Values.restApiCache.restApiUrl }}
+            - name: BACKUP_REST_URL
+              value: {{ .Values.restApiCache.backupRestApiUrl }}
+            - name: NODE_MONIKER
+              value: {{ .Values.restApiCache.nodeMoniker }}
+            - name: ENABLE_COUNTER
+              value: {{ .Values.restApiCache.enableCounter }}
+            - name: API_TITLE
+              value: {{ .Values.restApiCache.apiTitle }}
+            - name: DISABLE_SWAGGER_UI
+              value: {{ .Values.restApiCache.disableSwagger }}
+  
+    ports:
+      - name: http
+        containerPort: 80
+        protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /
+        port: http
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
+    resources:
+      {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
