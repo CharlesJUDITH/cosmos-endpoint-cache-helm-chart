@@ -28,6 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+      {{- if .Values.rpcCache.enabled }}
         - name: rpc-cache
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -64,7 +65,7 @@ spec:
               value: "usd"
             - name: RPC_TITLE
               value: "Juno Docker RPC"
-
+      {{ else }}
         - name: rest-cache
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -89,30 +90,30 @@ spec:
               value: {{ .Values.restApiCache.apiTitle }}
             - name: DISABLE_SWAGGER_UI
               value: {{ .Values.restApiCache.disableSwagger }}
-  
-    ports:
-      - name: http
-        containerPort: 80
-        protocol: TCP
-    livenessProbe:
-      httpGet:
-        path: /
-        port: http
-    readinessProbe:
-      httpGet:
-        path: /
-        port: http
-    resources:
-      {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- with .Values.nodeSelector }}
+            nodeSelector:
+              {{- toYaml . | nindent 8 }}
+            {{- end }}
+            {{- with .Values.affinity }}
+            affinity:
+              {{- toYaml . | nindent 8 }}
+            {{- end }}
+            {{- with .Values.tolerations }}
+            tolerations:
+              {{- toYaml . | nindent 8 }}
+            {{- end }}
