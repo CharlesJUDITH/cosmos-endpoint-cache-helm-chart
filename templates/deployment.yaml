@@ -36,35 +36,35 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: REMOTE_CONFIG_TIME_FILE
-              value: {{ .Values.rpcCache.remoteConfigTimeFile}}
+              value: {{ .Values.rpcCache.remoteConfigTimeFile | quote }}
             - name: "RPC_PREFIX"
-              value: {{ .Values.rpcCache.rpcPrefix }}
+              value: {{ .Values.rpcCache.rpcPrefix | quote }}
             - name: ENABLE_COUNTER
               value: {{ .Values.rpcCache.enableCounter | quote }}
             - name: USE_BACKUP_AS_PRIMARY
               value: {{ .Values.rpcCache.useBackupAsPrimary | quote }}
             - name: RPC_URL
-              value: {{ .Values.rpcCache.rpcUrl }}
+              value: {{ .Values.rpcCache.rpcUrl | quote }}
             - name: BACKUP_RPC_URL
-              value: {{ .Values.rpcCache.backupRpcUrl }}
+              value: {{ .Values.rpcCache.backupRpcUrl | quote }}
             - name: RPC_WEBSOCKET
-              value: {{ .Values.rpcCache.rpcWebsocket }}
+              value: {{ .Values.rpcCache.rpcWebsocket | quote }}
             - name: NODE_MONIKER
-              value: {{ .Values.rpcCache.nodeMoniker }}
+              value: {{ .Values.rpcCache.nodeMoniker | quote }}
             - name: RPC_LISTEN_ADDRESS
-              value: {{ .Values.rpcCache.rpcListenAddress }}
+              value: {{ .Values.rpcCache.rpcListenAddress | quote }}
             - name: NODE_TM_VERSION
-              value: {{ .Values.rpcCache.nodeTmVersion }}
+              value: {{ .Values.rpcCache.nodeTmVersion | quote }}
             - name: COINGECKO_ENABLED
               value: {{ .Values.rpcCache.coingeckoEnabled | quote }}
             - name: COINGECKO_CACHE_SECONDS
-              value: {{ .Values.rpcCache.coingeckoCacheSeconds }}
+              value: {{ .Values.rpcCache.coingeckoCacheSeconds | quote }}
             - name: COINGECKO_IDS
-              value: {{ .Values.rpcCache.coingeckoIds }}
+              value: {{ .Values.rpcCache.coingeckoIds | quote }}
             - name: COINGECKO_FIAT
               value: {{ .Values.rpcCache.coinGeckoFiat | quote }}
             - name: RPC_TITLE
-              value: {{ .Values.rpcCache.rpcTitle }}
+              value: {{ .Values.rpcCache.rpcTitle | quote }}
       {{ else }}
         - name: rest-cache
           securityContext:
