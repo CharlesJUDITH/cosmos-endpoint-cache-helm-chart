@@ -52,6 +52,7 @@ rpcCache:
   useBackupAsPrimary: false
   backupRpcUrl: "https://juno-rpc.polkachu.com"
   enableCounter: false
+  rpcTitle: "CHIHUAHUA RPC"
   port: 5001
 
 restApiCache:

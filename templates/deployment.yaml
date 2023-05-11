@@ -40,31 +40,31 @@ spec:
             - name: "RPC_PREFIX"
               value: {{ .Values.rpcCache.rpcPrefix }}
             - name: ENABLE_COUNTER
-              value: "false"
+              value: {{ .Values.rpcCache.enableCounter }}
             - name: USE_BACKUP_AS_PRIMARY
-              value: "false"
+              value: {{ .Values.rpcCache.useBackupAsPrimary }}
             - name: RPC_URL
-              value: "https://rpc.juno.strange.love:443"
+              value: {{ .Values.rpcCache.rpcUrl }}
             - name: BACKUP_RPC_URL
-              value: "https://juno-rpc.polkachu.com"
+              value: {{ .Values.rpcCache.backupRpcUrl }}
             - name: RPC_WEBSOCKET
-              value: "ws://15.204.143.232:26657/websocket"
+              value: {{ .Values.rpcCache.rpcWebsocket }}
             - name: NODE_MONIKER
-              value: "reecepbcups"
+              value: {{ .Values.rpcCache.nodeMoniker }}
             - name: RPC_LISTEN_ADDRESS
-              value: "HIDDEN"
+              value: {{ .Values.rpcCache.rpcListenAddress }}
             - name: NODE_TM_VERSION
-              value: "HIDDEN"
+              value: {{ .Values.rpcCache.nodeTmVersion }}
             - name: COINGECKO_ENABLED
-              value: "true"
+              value: {{ .Values.rpcCache.coingeckoEnabled }}
             - name: COINGECKO_CACHE_SECONDS
-              value: "6"
+              value: {{ .Values.rpcCache.coingeckoCacheSeconds }}
             - name: COINGECKO_IDS
-              value: "cosmos"
+              value: {{ .Values.rpcCache.coingeckoIds }}
             - name: COINGECKO_FIAT
-              value: "usd"
+              value: {{ .Values.rpcCache.coinGeckoFiat }}
             - name: RPC_TITLE
-              value: "Juno Docker RPC"
+              value: {{ .Values.rpcCache.rpcTitle }}
       {{ else }}
         - name: rest-cache
           securityContext:
