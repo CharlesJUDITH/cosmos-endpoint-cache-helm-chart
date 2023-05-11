@@ -40,9 +40,9 @@ spec:
             - name: "RPC_PREFIX"
               value: {{ .Values.rpcCache.rpcPrefix }}
             - name: ENABLE_COUNTER
-              value: {{ .Values.rpcCache.enableCounter }}
+              value: {{ .Values.rpcCache.enableCounter | quote }}
             - name: USE_BACKUP_AS_PRIMARY
-              value: {{ .Values.rpcCache.useBackupAsPrimary }}
+              value: {{ .Values.rpcCache.useBackupAsPrimary | quote }}
             - name: RPC_URL
               value: {{ .Values.rpcCache.rpcUrl }}
             - name: BACKUP_RPC_URL
@@ -56,13 +56,13 @@ spec:
             - name: NODE_TM_VERSION
               value: {{ .Values.rpcCache.nodeTmVersion }}
             - name: COINGECKO_ENABLED
-              value: {{ .Values.rpcCache.coingeckoEnabled }}
+              value: {{ .Values.rpcCache.coingeckoEnabled | quote }}
             - name: COINGECKO_CACHE_SECONDS
               value: {{ .Values.rpcCache.coingeckoCacheSeconds }}
             - name: COINGECKO_IDS
               value: {{ .Values.rpcCache.coingeckoIds }}
             - name: COINGECKO_FIAT
-              value: {{ .Values.rpcCache.coinGeckoFiat }}
+              value: {{ .Values.rpcCache.coinGeckoFiat | quote }}
             - name: RPC_TITLE
               value: {{ .Values.rpcCache.rpcTitle }}
       {{ else }}
@@ -77,7 +77,7 @@ spec:
             - name: REST_PREFIX
               value: {{ .Values.restApiCache.restApiPrefix }}
             - name: USE_BACKUP_AS_PRIMARY
-              value: {{ .Values.restApiCache.useBackupAsPrimary }}
+              value: {{ .Values.restApiCache.useBackupAsPrimary | quote }}
             - name: REST_URL
               value: {{ .Values.restApiCache.restApiUrl }}
             - name: BACKUP_REST_URL
@@ -85,7 +85,7 @@ spec:
             - name: NODE_MONIKER
               value: {{ .Values.restApiCache.nodeMoniker }}
             - name: ENABLE_COUNTER
-              value: {{ .Values.restApiCache.enableCounter }}
+              value: {{ .Values.restApiCache.enableCounter | quote }}
             - name: API_TITLE
               value: {{ .Values.restApiCache.apiTitle }}
             - name: DISABLE_SWAGGER_UI
