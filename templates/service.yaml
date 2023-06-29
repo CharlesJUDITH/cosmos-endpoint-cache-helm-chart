@@ -9,13 +9,13 @@ spec:
   ports:
     {{- if .Values.rpcCache.enabled }}
     - port: {{ .Values.rpcCache.port }}
-      targetPort: http
+      targetPort: {{ .Values.rpcCache.port }}
       protocol: TCP
       name: rpc
     {{- end }}
     {{- if .Values.restApiCache.enabled }}
     - port: {{ .Values.restApiCache.port }}
-      targetPort: http
+      targetPort: {{ .Values.restApiCache.port }}
       protocol: TCP
       name: rest
     {{- end }}
