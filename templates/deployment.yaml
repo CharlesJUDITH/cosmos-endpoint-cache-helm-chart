@@ -37,8 +37,8 @@ spec:
           env:
             - name: REMOTE_CONFIG_TIME_FILE
               value: {{ .Values.rpcCache.remoteConfigTimeFile}}
-            - name: "RPC_PREFIX"
-              value: {{ .Values.rpcCache.rpcPrefix }}
+            - name: RPC_PREFIX
+              value: {{ .Values.rpcCache.rpcPrefix | quote }}
             - name: ENABLE_COUNTER
               value: {{ .Values.rpcCache.enableCounter }}
             - name: USE_BACKUP_AS_PRIMARY
@@ -85,21 +85,21 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: REMOTE_CONFIG_TIME_FILE
-              value: {{ .Values.restApiCache.remoteConfigTimeFile}}
+              value: {{ .Values.restApiCache.remoteConfigTimeFile }}
             - name: REST_PREFIX
-              value: {{ .Values.restApiCache.restApiPrefix }}
+              value: {{ .Values.restApiCache.restApiPrefix | quote }}
             - name: USE_BACKUP_AS_PRIMARY
               value: {{ .Values.restApiCache.useBackupAsPrimary }}
             - name: REST_URL
-              value: {{ .Values.restApiCache.restApiUrl }}
+              value: {{ .Values.restApiCache.restApiUrl | quote }}
             - name: BACKUP_REST_URL
-              value: {{ .Values.restApiCache.backupRestApiUrl }}
+              value: {{ .Values.restApiCache.backupRestApiUrl |quote }}
             - name: NODE_MONIKER
-              value: {{ .Values.restApiCache.nodeMoniker }}
+              value: {{ .Values.restApiCache.nodeMoniker | quote }}
             - name: ENABLE_COUNTER
               value: {{ .Values.restApiCache.enableCounter }}
             - name: API_TITLE
-              value: {{ .Values.restApiCache.apiTitle }}
+              value: {{ .Values.restApiCache.apiTitle | quote }}
             - name: DISABLE_SWAGGER_UI
               value: {{ .Values.restApiCache.disableSwagger }}
           ports:
