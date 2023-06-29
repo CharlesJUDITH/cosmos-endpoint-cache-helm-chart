@@ -53,9 +53,10 @@ rpcCache:
   backupRpcUrl: "https://juno-rpc.polkachu.com"
   enableCounter: false
   port: 5001
+  rpcTitle: "JUNO RPC"
 
 restApiCache:
-  enabled: false
+  enabled: true
   restApiPrefix: "junorpc_1"
   restApiUrl: "https://rpc.juno.strange.love:443"
   nodeMoniker: "reecepbcups"

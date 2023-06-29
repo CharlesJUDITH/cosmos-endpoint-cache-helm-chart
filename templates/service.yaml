@@ -7,9 +7,17 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.rpcCache.enabled | ternary .Values.rpcCache.port .Values.restApiCache.port }}
+    {{- if .Values.rpcCache.enabled }}
+    - port: {{ .Values.rpcCache.port }}
       targetPort: http
       protocol: TCP
-      name: http
+      name: rpc
+    {{- end }}
+    {{- if .Values.restApiCache.enabled }}
+    - port: {{ .Values.restApiCache.port }}
+      targetPort: http
+      protocol: TCP
+      name: rest
+    {{- end }}
   selector:
     {{- include "cosmos-endpoint-cache.selectorLabels" . | nindent 4 }}
