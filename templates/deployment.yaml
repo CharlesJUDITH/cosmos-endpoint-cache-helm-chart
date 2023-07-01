@@ -77,7 +77,8 @@ spec:
             httpGet:
               path: /
               port: rpc
-      {{ else }}
+      {{- end }}
+      {{ if .Values.restApiCache.enabled }}
         - name: rest-cache
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
