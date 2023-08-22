@@ -7,8 +7,16 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - {{ .Values.ingress.chain }}-rpc.{{ .Values.ingress.domain }}
+    secretName: {{ .Values.ingress.chain }}-rpc-node-tls
+  - hosts:
+    - {{ .Values.ingress.chain }}-api.{{ .Values.ingress.domain }}
+    secretName: {{ .Values.ingress.chain }}-api-node-tls
   rules:
     {{ if .Values.rpcCache.enabled }}
     - host: {{ .Values.ingress.chain }}-rpc.{{ .Values.ingress.domain }}
@@ -21,6 +29,16 @@ spec:
                 name: {{ include "cosmos-endpoint-cache.fullname" . }}
                 port:
                   number: 5001
+    - host: {{ .Values.ingress.chain }}-rpc.{{ .Values.ingress.domain }}
+      http:
+        paths:
+          - path: /websocket
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.rpcCache.rpcWebsocketServiceName }}
+                port:
+                  number: {{ .Values.rpcCache.rpcWebsocketServicePort }}
     {{- end }}
     {{ if .Values.restApiCache.enabled }}
     - host: {{ .Values.ingress.chain }}-rest.{{ .Values.ingress.domain }}
